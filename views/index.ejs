@@ -6,20 +6,25 @@
 </head>
 <body>
   <%- include('./error_messages'); %> 
-<% if(isAuth) { %>
-  <form action="/" method="post">
-    <label>タスクの追加</label>
-    <input required type="text" name="add" placeholder="何をする?"/>
-    <input type="submit" value="追加"/>
-  </form>
-  <ul>
-    <% for(let todo of todos){ %>
-      <li><span><%= todo.content %></span></li>
-    <% } %>
-  </ul>
-<% } else { %>
-  <h1>Welcome to the TodoApp</h1>
-  <a href="/signup">Sign up now!</a>
-<% } %>
+  <% if(isAuth) { %>
+    <form action="/" method="post">
+      <label>タスクの追加</label>
+      <input required type="text" name="add" placeholder="何をする?"/>
+      <input type="submit" value="追加"/>
+    </form>
+    <form action="/search" method="get">
+      <label>検索</label>
+      <input type="text" name="query" placeholder="タスクを検索"/>
+      <input type="submit" value="検索"/>
+    </form>
+    <ul>
+      <% for(let todo of todos){ %>
+        <li><span><%= todo.content %></span></li>
+      <% } %>
+    </ul>
+  <% } else { %>
+    <h1>Welcome to the TodoApp</h1>
+    <a href="/signup">Sign up now!</a>
+  <% } %>
 </body>
 </html>

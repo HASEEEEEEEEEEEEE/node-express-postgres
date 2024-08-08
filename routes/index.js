@@ -23,6 +23,29 @@ router.get('/', function (req, res, next) {
     });
 });
 
+router.get('/search', function (req, res, next) {
+  const query = req.query.query;
+  const userId = req.session.userid;
+  const isAuth = Boolean(userId);
+
+  knex("tasks")
+    .where('content', 'like', `%${query}%`)
+    .then(function (results) {
+      res.render('index', {
+        title: 'ToDo App',
+        todos: results,
+        isAuth: isAuth,
+      });
+    })
+    .catch(function (err) {
+      console.error(err);
+      res.render('index', {
+        title: 'ToDo App',
+        isAuth: isAuth,
+      });
+    });
+});
+
 router.post('/', function (req, res, next) {
   const userId = req.session.userid;
   const isAuth = Boolean(userId);
